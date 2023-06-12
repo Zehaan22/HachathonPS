@@ -22,10 +22,22 @@ events = list(events)
 teams = list(team)
 }
 """
+import mysql.connector as sql
+
+mydb = sql.connect(
+    host = "localhost",
+    user="root",
+    password="Zattak@321",
+    database = "TimePlanner"
+)
+
+cursor = mydb.cursor()
+
+
 
 class Event:
     """Acts as the node for the events iterable (events) for User."""
-    
+
     def __init__(self, user_id , desc , date ,time):
         self.user_id = user_id #The user who has this event
         self.event_desc = desc #String description of the event
@@ -49,14 +61,8 @@ class User:
     def __init__(self, user_id, name, events, teams):
         self.id = user_id # Variable to strore the unique user_id
         self.name = name # String of user name
-        self.events = [] # List to store the events
-        self.teams = [] # List of teams that the user is in
-        
+        self.events = events # List to store the events
+        self.teams = teams # List of teams that the user is in
+   
     def add_event(self, event):
         self.events.append(event)
-        
-    
-        
-    
-        
-        
