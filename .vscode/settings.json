@@ -6,5 +6,9 @@
   "python.linting.pydocstyleEnabled": false,
   "python.linting.pylamaEnabled": false,
   "python.linting.pylintEnabled": true,
-  "python.linting.enabled": true
+  "python.linting.enabled": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  },
+  "python.formatting.provider": "none"
 }
