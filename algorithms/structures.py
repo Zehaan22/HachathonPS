@@ -30,6 +30,7 @@ Table description for User
 ('teams', b'json', 'YES', '', None, '')]
 """
 import mysql.connector as sql
+import datetime
 import json
 
 mydb = sql.connect(
@@ -71,7 +72,25 @@ class User:
         self.events = json.dumps([])  # List to store the events
         self.teams = json.dumps([])  # List of teams that the user is in
 
-    def add_event(self):
+        # Add the user to the database
+        self.add_user_to_databse()
+
+    def add_event(self, event):
+        command = ("SELECT events FROM User WHERE id = %s")
+        vals = (self.id)
+        cursor.execute(command, vals)
+        events_array = cursor.fetchall()
+        adding_tupe = (event.event_desc, event.date, event.time)
+        events_array.append(adding_tupe)
+
+        self.events = json.dumps(events_array)
+
+        command2 = ("UPDATE user SET events = %s WHERE id = %s")
+        vals = (self.events, self.id)
+        cursor.execute(command2, vals)
+        mydb.commit()
+
+    def check_events(self):
         command = ("SELECT events FROM User WHERE id = %s")
         vals = (self.id)
         cursor.execute(command, vals)
@@ -93,6 +112,8 @@ class User:
         self.id = x[0]
 
 
-foo = User('bar')
-foo.add_user_to_databse()
-foo.add_event()
+foo = User("del")
+
+event = Event(foo.id, "My Birthday", "2023/07/08/2300", 2)
+foo.add_event(event)
+foo.check_events()
